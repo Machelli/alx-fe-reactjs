@@ -3,9 +3,10 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 import WelcomeMessage from './components/WelcomeMessage.jsx'
-import Footer from './Footer';
-import Header from './Header';
-import MainContent from './MainContent';
+import Footer from './components/Footer.jsx';
+import Header from './components/Header.jsx';
+import MainContent from './components/MainContent.jsx';
+import UserProfile from './components/UserProfile.jsx';
 
 function App() {
   const [count, setCount] = useState(0)
@@ -28,6 +29,7 @@ function App() {
         <button onClick={() => setCount((count) => count + 1)}>
           count is {count}
         </button>
+        <UserProfile />
         <p>
           Edit <code>src/App.jsx</code> and save to test HMR
         </p>
