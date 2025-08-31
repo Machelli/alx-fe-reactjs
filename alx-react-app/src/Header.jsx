@@ -1,10 +1,6 @@
-function Header () {
- return (
-  <header>
+export default function Header() {
+return ( <header>
   <h1>My Favorite Cities</h1>
-</header>
-
- );
+</header> );
 }
 
-export default Header;
