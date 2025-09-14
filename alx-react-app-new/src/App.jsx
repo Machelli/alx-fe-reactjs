@@ -7,6 +7,8 @@ import Footer from './components/Footer.jsx';
 import Header from './components/Header.jsx';
 import MainContent from './components/MainContent.jsx';
 import UserProfile from './components/UserProfile.jsx';
+import Counter from './components/Counter.jsx'
+
 
 function App() {
   const [count, setCount] = useState(0)
@@ -30,10 +32,16 @@ function App() {
           count is {count}
         </button>
         <UserProfile />
+
+       <Counter />
+
         <p>
           Edit <code>src/App.jsx</code> and save to test HMR
         </p>
         <Footer />
+       
+      
+
       </div>
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
