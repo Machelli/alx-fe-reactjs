@@ -1,5 +1,5 @@
 export default function Header() {
-return ( <header style={{ background:'green', color : 'white', textalign : 'center'}}>
+return ( <header style={{ backgroundColor:'green', color : 'white', textAlign : 'center'}}>
   <h1>My Favorite Cities</h1>
 </header> );
 }
