@@ -1,5 +1,4 @@
 
- <props name="Praise" age={30} bio="A really dedicated tech enthusiast." />
 
 const UserProfile = (props) => {
    return (
