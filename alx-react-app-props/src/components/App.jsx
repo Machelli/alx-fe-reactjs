@@ -1,5 +1,5 @@
 import ProfilePage from './ProfilePage';
-import UserContext from '../UserContext.js'
+import UserContext from '../user.context.js'
 
 
 
