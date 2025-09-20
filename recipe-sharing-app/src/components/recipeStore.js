@@ -6,17 +6,41 @@ const useRecipeStore = create(set => ({
     { id: 2, title: 'Jollof rice', description: 'A delicious West African cuisine' },
     { id: 3, title: 'Classic Beef Lasagna', description: 'Layers of pasta, rich bolognese sauce, creamy béchamel, and melted cheese baked to perfection.' },
   ],
-  addRecipe: (newRecipe) => set(state => ({ recipes: [...state.recipes, { ...newRecipe, id: Date.now() }] })),
-  deleteRecipe: (id) => set(state => ({ recipes: state.recipes.filter(recipe => recipe.id !== id) })),
+   searchTerm: '',
+  filteredRecipes: [],
+
+  
+  addRecipe: (newRecipe) => set(state => ({
+    recipes: [...state.recipes, { ...newRecipe, id: Date.now(), isFavorite: false, tags: newRecipe.tags || [] }]
+  })),
+
+  
+  deleteRecipe: (id) => set(state => ({
+    recipes: state.recipes.filter(recipe => recipe.id !== id)
+  })),
+
+  
   updateRecipe: (updatedRecipe) => set(state => ({
     recipes: state.recipes.map(recipe =>
       recipe.id === updatedRecipe.id ? updatedRecipe : recipe
     )
   })),
+
+  
+  toggleFavorite: (id) => set(state => ({
+    recipes: state.recipes.map(recipe =>
+      recipe.id === id ? { ...recipe, isFavorite: !recipe.isFavorite } : recipe
+    )
+  })),
+
+  
+  setSearchTerm: (term) => set({ searchTerm: term }),
+
+  filterRecipes: () => set(state => ({
+    filteredRecipes: state.recipes.filter(recipe =>
+      recipe.title.toLowerCase().includes(state.searchTerm.toLowerCase())
+    )
+  })),
 }));
 
 export default useRecipeStore;
-
-export const deleteRecipe = (id) => {
-    useRecipeStore.getState().deleteRecipe(id);
-};
