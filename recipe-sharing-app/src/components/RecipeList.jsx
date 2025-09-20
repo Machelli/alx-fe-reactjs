@@ -1,5 +1,7 @@
 import useRecipeStore from "./recipeStore"
 import DeleteRecipeButton from "./DeleteRecipeButton"
+import { Link, react-router-dom } from 'react-router-dom';
+
 
 
 
@@ -74,20 +76,29 @@ const RecipeList = ({ navigateToDetails, navigateToEdit, navigateToAdd, openModa
                 <h4>{recipe.title}</h4>
                 <p>{recipe.description.substring(0, 75)}...</p>
               </div>
-              <div>
-                <button onClick={() => toggleFavorite(recipe.id)}>
-                  <span>{recipe.isFavorite ? '★' : '☆'}</span>
-                </button>
-                <button onClick={() => navigateToDetails(recipe.id)}>
-                  View
-                </button>
-                <button onClick={() => navigateToEdit(recipe.id)}>
-                  Edit
-                </button>
-                <button onClick={() => openModal(recipe.id)}>
-                  Delete
-                </button>
-              </div>
+                <div>
+                  <button onClick={() => toggleFavorite(recipe.id)}>
+                    <span>{recipe.isFavorite ? '★' : '☆'}</span>
+                  </button>
+                  <Link to={`/recipe/${recipe.id}`}>
+                    <button>View</button>
+                  </Link>
+                  <Link to={`/edit/${recipe.id}`}>
+                    <button>Edit</button>
+                  </Link>
+                  <button onClick={() => openModal(recipe.id)}>
+                    Delete
+                  </button>
+                </div>
+              </li>
+            ))}}
+          </ul>}
+        <h3>{title}</h3>
+        {list.length > 0 ? (
+          <ul>
+            {list.map(recipe => (
+              <li key={recipe.id}>
+              
             </li>
           ))}
         </ul>
@@ -95,7 +106,7 @@ const RecipeList = ({ navigateToDetails, navigateToEdit, navigateToAdd, openModa
         <p>{noRecipesMessage}</p>
       )}
     </>
-  );
+  ;
 
   return (
     <div>
@@ -126,7 +137,7 @@ const RecipeList = ({ navigateToDetails, navigateToEdit, navigateToAdd, openModa
       {renderRecipeList(recipesToDisplay, 'All Recipes', 'No recipes found. Try adjusting your search.')}
     </div>
   );
-};
+;
 
 DeleteRecipeButton ()
 
