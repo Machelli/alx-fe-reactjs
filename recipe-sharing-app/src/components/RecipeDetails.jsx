@@ -1,5 +1,8 @@
 import useRecipeStore from "./recipeStore"
 import DeleteRecipeButton from "./DeleteRecipeButton"
+import EditRecipeForm from "./EditRecipeForm";
+
+
 
 const RecipeDetails = ({ recipeId, navigateToEdit, navigateToList, openModal }) => {
 
@@ -21,8 +24,9 @@ const RecipeDetails = ({ recipeId, navigateToEdit, navigateToList, openModal }) 
 
   return (
     <div>
-      <h2>{recipe.title}</h2>
+      <h1>{recipe.title}</h1>
       <p>{recipe.description}</p>
+      <EditRecipeForm />
       <div>
         <button
           onClick={() => navigateToEdit(recipe.id)}
