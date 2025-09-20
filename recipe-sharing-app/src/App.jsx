@@ -1,5 +1,27 @@
 import React, { useState } from 'react';
 import { create } from 'zustand';
+import { createBrowserRouter as Router, Routes, Route, createBrowserRouter } from 'react-router-dom';
+import RecipeList from './RecipeList';
+import RecipeDetails from './RecipeDetails';
+import AddRecipeForm from './AddRecipeForm';
+import EditRecipeForm from './EditRecipeForm';
+
+const Router = createBrowserRouter([
+
+{
+ path: './RecipeDetails'
+
+element: RecipeDetails
+}
+  
+
+
+
+])
+
+
+
+
 
 export default function App () {
 const useRecipeStore = create(set => ({
