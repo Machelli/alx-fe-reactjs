@@ -1,49 +1,51 @@
+import { useState } from "react"
 import useRecipeStore from "./recipeStore"
-import { useState } from "react";
 
-const AddRecipeForm = ({ navigateToList }) => {
-  const addRecipe = useRecipeStore(state => state.addRecipe);
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
+
+const EditRecipeForm = ({ recipeId, navigateToList }) => {
+  const recipes = useRecipeStore(state => state.recipes);
+  const updateRecipe = useRecipeStore(state => state.updateRecipe);
+
+  const recipeToEdit = recipes.find(r => r.id === recipeId);
+
+  const [title, setTitle] = useState(recipeToEdit.title);
+  const [description, setDescription] = useState(recipeToEdit.description);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (title.trim() && description.trim()) {
-      addRecipe({ title, description });
-      setTitle('');
-      setDescription('');
+      
+      updateRecipe({ id: recipeId, title, description });
       navigateToList();
     }
   };
 
   return (
     <div>
-      <h2>Add a New Recipe</h2>
+      <h2>Edit Recipe</h2>
       <form onSubmit={handleSubmit}>
         <input
           type="text"
           placeholder="Recipe Title"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
-
+          required
         />
         <textarea
           placeholder="Recipe Description"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
-
-          required
         ></textarea>
         <div>
           <button
             type="submit"
            >
-            Add Recipe
+            Save Changes
           </button>
           <button
             type="button"
             onClick={navigateToList}
-        >
+           >
             Cancel
           </button>
         </div>
@@ -51,6 +53,3 @@ const AddRecipeForm = ({ navigateToList }) => {
     </div>
   );
 };
-
-export default AddRecipeForm 
-
