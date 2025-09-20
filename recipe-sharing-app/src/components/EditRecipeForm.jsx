@@ -11,8 +11,8 @@ const EditRecipeForm = ({ recipeId, navigateToList }) => {
   const [title, setTitle] = useState(recipeToEdit.title);
   const [description, setDescription] = useState(recipeToEdit.description);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleSubmit = (event) => {
+   event.preventDefault();
     if (title.trim() && description.trim()) {
       
       updateRecipe({ id: recipeId, title, description });
@@ -53,3 +53,5 @@ const EditRecipeForm = ({ recipeId, navigateToList }) => {
     </div>
   );
 };
+
+export default EditRecipeForm
