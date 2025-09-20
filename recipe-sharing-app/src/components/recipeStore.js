@@ -2,8 +2,8 @@ import { create } from 'zustand'
 
 const useRecipeStore = create(set => ({
   recipes: [
-    { id: 1, title: 'Spaghetti Carbonara', description: 'A simple and delicious Italian pasta dish with eggs, hard cheese, cured pork, and black pepper.' },
-    { id: 2, title: 'Chicken Tikka Masala', description: 'Chunks of roasted marinated chicken in a spiced curry sauce. A staple of Indian cuisine.' },
+    { id: 1, title: 'Amala and ewedu', description: 'A proper western nigerian dish ' },
+    { id: 2, title: 'Jollof rice', description: 'A delicious West African cuisine' },
     { id: 3, title: 'Classic Beef Lasagna', description: 'Layers of pasta, rich bolognese sauce, creamy béchamel, and melted cheese baked to perfection.' },
   ],
   addRecipe: (newRecipe) => set(state => ({ recipes: [...state.recipes, { ...newRecipe, id: Date.now() }] })),
@@ -16,3 +16,7 @@ const useRecipeStore = create(set => ({
 }));
 
 export default useRecipeStore;
+
+export const deleteRecipe = (id) => {
+    useRecipeStore.getState().deleteRecipe(id);
+};
