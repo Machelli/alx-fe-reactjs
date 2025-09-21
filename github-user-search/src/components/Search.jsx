@@ -108,6 +108,7 @@ const Search = () => {
               Start by searching for a GitHub user.
             </p>
           )}
+          console.log ('Looks like we cant find the user')
         </div>
       </div>
     </div>
