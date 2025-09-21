@@ -6,34 +6,34 @@ const useRecipeStore = create(set => ({
     { id: 2, title: 'Jollof rice', description: 'A delicious West African cuisine' },
     { id: 3, title: 'Classic Beef Lasagna', description: 'Layers of pasta, rich bolognese sauce, creamy béchamel, and melted cheese baked to perfection.' },
   ],
-   searchTerm: '',
+   favorites: [],
+  recommendations: [],
+  searchTerm: '',
   filteredRecipes: [],
 
-  
   addRecipe: (newRecipe) => set(state => ({
-    recipes: [...state.recipes, { ...newRecipe, id: Date.now(), isFavorite: false, tags: newRecipe.tags || [] }]
+    recipes: [...state.recipes, { ...newRecipe, id: Date.now() }]
   })),
 
-  
-  deleteRecipe: (id) => set(state => ({
-    recipes: state.recipes.filter(recipe => recipe.id !== id)
-  })),
-
-  
   updateRecipe: (updatedRecipe) => set(state => ({
     recipes: state.recipes.map(recipe =>
       recipe.id === updatedRecipe.id ? updatedRecipe : recipe
     )
   })),
 
-  
-  toggleFavorite: (id) => set(state => ({
-    recipes: state.recipes.map(recipe =>
-      recipe.id === id ? { ...recipe, isFavorite: !recipe.isFavorite } : recipe
-    )
+  deleteRecipe: (id) => set(state => ({
+    recipes: state.recipes.filter(recipe => recipe.id !== id)
   })),
 
-  
+  toggleFavorite: (recipeId) => set(state => {
+    const isCurrentlyFavorite = state.favorites.includes(recipeId);
+    if (isCurrentlyFavorite) {
+      return { favorites: state.favorites.filter(id => id !== recipeId) };
+    } else {
+      return { favorites: [...state.favorites, recipeId] };
+    }
+  }),
+
   setSearchTerm: (term) => set({ searchTerm: term }),
 
   filterRecipes: () => set(state => ({
@@ -41,6 +41,38 @@ const useRecipeStore = create(set => ({
       recipe.title.toLowerCase().includes(state.searchTerm.toLowerCase())
     )
   })),
+
+  generateRecommendations: () => set(state => {
+    const favoriteRecipes = state.recipes.filter(r => state.favorites.includes(r.id));
+    if (favoriteRecipes.length === 0) {
+      return { recommendations: [] };
+    }
+
+    const favoriteTags = favoriteRecipes.flatMap(r => r.tags);
+    const tagCounts = favoriteTags.reduce((acc, tag) => {
+      acc[tag] = (acc[tag] || 0) + 1;
+      return acc;
+    }, {});
+
+    const recommendations = state.recipes
+      .filter(r => !state.favorites.includes(r.id))
+      .map(recipe => {
+        let score = 0;
+        if (recipe.tags) {
+          recipe.tags.forEach(tag => {
+            score += tagCounts[tag] || 0;
+          });
+        }
+        return { ...recipe, score };
+      })
+      .sort((a, b) => b.score - a.score)
+      .filter(r => r.score > 0)
+      .slice(0, 3);
+
+    return { recommendations };
+  }),
 }));
+
+
 
 export default useRecipeStore;

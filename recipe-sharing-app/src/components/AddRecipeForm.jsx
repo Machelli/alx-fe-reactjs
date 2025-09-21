@@ -1,56 +1,51 @@
 import useRecipeStore from "./recipeStore"
 import { useState } from "react";
 
-const AddRecipeForm = ({ navigateToList }) => {
-  const addRecipe = useRecipeStore(state => state.addRecipe);
+const AddRecipeForm = () => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
+  const [tags, setTags] = useState('');
+  const navigate = useNavigate();
+  const addRecipe = useRecipeStore(state => state.addRecipe);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (title.trim() && description.trim()) {
-      addRecipe({ title, description });
-      setTitle('');
-      setDescription('');
-      navigateToList();
-    }
+    const newRecipe = {
+      title,
+      description,
+      tags: tags.split(',').map(tag => tag.trim()).filter(tag => tag)
+    };
+    addRecipe(newRecipe);
+    navigate('/');
   };
 
   return (
-    <div>
-      <h2>Add a New Recipe</h2>
-      <form onSubmit={handleSubmit}>
+    <div style={{ padding: '20px', maxWidth: '600px', margin: '0 auto' }}>
+      <h2>Add New Recipe</h2>
+      <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
         <input
           type="text"
-          placeholder="Recipe Title"
+          placeholder="Title"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
-
+          required
         />
         <textarea
-          placeholder="Recipe Description"
+          placeholder="Description"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
-
           required
-        ></textarea>
-        <div>
-          <button
-            type="submit"
-           >
-            Add Recipe
-          </button>
-          <button
-            type="button"
-            onClick={navigateToList}
-        >
-            Cancel
-          </button>
-        </div>
+        />
+        <input
+          type="text"
+          placeholder="Tags (comma-separated, e.g., 'italian, pasta, dinner')"
+          value={tags}
+          onChange={(e) => setTags(e.target.value)}
+        />
+        <button type="submit">Add Recipe</button>
+        <button type="button" onClick={() => navigate('/')}>Cancel</button>
       </form>
     </div>
   );
 };
-
-export default AddRecipeForm 
 
