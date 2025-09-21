@@ -12,8 +12,5 @@ createRoot(document.getElementById('root')).render(
   </StrictMode>,
 )
 
-<FavoritesList/>
-
-<RecommendationsList />
 
 
