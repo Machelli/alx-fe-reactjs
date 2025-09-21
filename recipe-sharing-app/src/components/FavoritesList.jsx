@@ -1,4 +1,4 @@
-import  useRecipeStore  from './recipeStore';
+import useRecipeStore from './recipeStore';
 
 const FavoritesList = () => {
   const favorites = useRecipeStore(state => state.favorites.map(id =>
@@ -19,3 +19,4 @@ const FavoritesList = () => {
 };
 
 export default FavoritesList
+>>>>>>> 8ae5e2b697246195ce7d59511f8158e0f4d8a0eb

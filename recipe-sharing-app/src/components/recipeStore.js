@@ -1,4 +1,4 @@
-import { create } from 'zustand'
+import { create } from 'zustand';
 
 const useRecipeStore = create(set => ({
   recipes: [
@@ -6,7 +6,7 @@ const useRecipeStore = create(set => ({
     { id: 2, title: 'Jollof rice', description: 'A delicious West African cuisine' },
     { id: 3, title: 'Classic Beef Lasagna', description: 'Layers of pasta, rich bolognese sauce, creamy béchamel, and melted cheese baked to perfection.' },
   ],
-   favorites: [],
+  favorites: [],
   recommendations: [],
   searchTerm: '',
   filteredRecipes: [],
@@ -47,32 +47,11 @@ const useRecipeStore = create(set => ({
     if (favoriteRecipes.length === 0) {
       return { recommendations: [] };
     }
-
-    const favoriteTags = favoriteRecipes.flatMap(r => r.tags);
-    const tagCounts = favoriteTags.reduce((acc, tag) => {
-      acc[tag] = (acc[tag] || 0) + 1;
-      return acc;
-    }, {});
-
-    const recommendations = state.recipes
-      .filter(r => !state.favorites.includes(r.id))
-      .map(recipe => {
-        let score = 0;
-        if (recipe.tags) {
-          recipe.tags.forEach(tag => {
-            score += tagCounts[tag] || 0;
-          });
-        }
-        return { ...recipe, score };
-      })
-      .sort((a, b) => b.score - a.score)
-      .filter(r => r.score > 0)
-      .slice(0, 3);
-
-    return { recommendations };
-  }),
+    // Simple recommendation logic: get 3 random recipes that are not favorites.
+    const nonFavoriteRecipes = state.recipes.filter(r => !state.favorites.includes(r.id));
+    const newRecommendations = nonFavoriteRecipes.sort(() => 0.5 - Math.random()).slice(0, 3);
+    return { recommendations: newRecommendations };
+  })
 }));
-
-
 
 export default useRecipeStore;
