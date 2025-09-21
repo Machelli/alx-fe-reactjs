@@ -5,7 +5,7 @@ import RecipeList from './RecipeList';
 import RecipeDetails from './RecipeDetails';
 import AddRecipeForm from './AddRecipeForm';
 import EditRecipeForm from './EditRecipeForm';
-import Favoriteslist from './Favoriteslist'
+import FavoritesList from './components/FavoritesList.jsx'
 import RecommendationsList from './components/RecommendationsList';
 
 const useRecipeStore = create(set => ({
@@ -245,6 +245,4 @@ export default function App() {
   );
 }
 
-Favoriteslist()
-
-RecommendationsList()
+<><FavoritesList /><RecommendationsList /></>
