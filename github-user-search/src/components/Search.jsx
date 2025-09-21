@@ -25,7 +25,7 @@ const Search = () => {
       setIsLoading(false); 
       
       if (err.response && err.response.status === 404) {
-        setError("Looks like we can't find the user.");
+        console.log ("Looks like we can't find the user.");
       } else {
         
         setError("An error occurred while fetching data.");
